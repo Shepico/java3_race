@@ -3,7 +3,7 @@ package ru.geekbrains.homework5;
 import java.util.concurrent.Semaphore;
 
 public class Tunnel extends Stage {
-    Semaphore smp = new Semaphore(2);
+    Semaphore smp = new Semaphore(MainClass.CARS_COUNT / 2);
     public Tunnel() {
         this.length = 80;
         this.description = "Тоннель " + length + " метров";
@@ -11,7 +11,6 @@ public class Tunnel extends Stage {
 
     @Override
     public void go(Car c) {
-        try {
             try {
                 System.out.println(c.getName() + " готовится к этапу(ждет): " + description);
                 smp.acquire();
@@ -23,8 +22,5 @@ public class Tunnel extends Stage {
                 System.out.println(c.getName() + " закончил этап: " + description);
                 smp.release();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
